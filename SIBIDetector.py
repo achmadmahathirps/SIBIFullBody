@@ -9,7 +9,8 @@ fps_buffer = deque(maxlen=10)
 
 def update_fps(previous_time):
     current_time = time.time()
-    fps = 1/(current_time - previous_time) if previous_time != 0 else 0
+    delta = current_time - previous_time
+    fps = 1/delta if delta != 0 else 0
 
     fps_buffer.append(fps)
     smoothed_fps = sum(fps_buffer) / len(fps_buffer)
