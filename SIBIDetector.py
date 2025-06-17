@@ -1,10 +1,13 @@
+import time
+
+import keyboard
 import cv2 as opencv
 import mediapipe
 
 def main():
 
     # Initialize webcam settings
-    webcam = int(0)
+    webcam = int(1)
     from_capture = opencv.VideoCapture(webcam, opencv.CAP_DSHOW)
     from_capture.set(opencv.CAP_PROP_FRAME_WIDTH, 640)
     from_capture.set(opencv.CAP_PROP_FRAME_HEIGHT, 480)
@@ -21,6 +24,7 @@ def main():
         min_detection_confidence = 0.5,
         min_tracking_confidence = 0.5
     )
+    
     mediapipe_drawing = mediapipe.solutions.drawing_utils
     mediapipe_drawing_styles = mediapipe.solutions.drawing_styles
 
@@ -42,7 +46,7 @@ def main():
         # Mediapipe detection start ------------------------------------------------------------------------------------
         frame.flags.writeable = False
         frame = opencv.cvtColor(frame, opencv.COLOR_BGR2RGB)
-        results = holistic.process(frame)
+        detection_results = holistic.process(frame)
 
         frame.flags.writeable = True
         frame = opencv.cvtColor(frame, opencv.COLOR_RGB2BGR)
@@ -50,7 +54,7 @@ def main():
         # Draw pose landmark
         mediapipe_drawing.draw_landmarks(
             frame,
-            results.pose_landmarks,
+            detection_results.pose_landmarks,
             mediapipe_holistic.POSE_CONNECTIONS,
             landmark_drawing_spec = mediapipe_drawing_styles.get_default_pose_landmarks_style(),
         )
@@ -58,20 +62,24 @@ def main():
         # Draw right hand landmark
         mediapipe_drawing.draw_landmarks(
             frame,
-            results.right_hand_landmarks,
+            detection_results.right_hand_landmarks,
             mediapipe_holistic.HAND_CONNECTIONS,
             landmark_drawing_spec = mediapipe_drawing_styles.get_default_hand_landmarks_style(),
         )
 
         mediapipe_drawing.draw_landmarks(
             frame,
-            results.left_hand_landmarks,
+            detection_results.left_hand_landmarks,
             mediapipe_holistic.HAND_CONNECTIONS,
             landmark_drawing_spec = mediapipe_drawing_styles.get_default_hand_landmarks_style(),
         )
 
         opencv.imshow("SIBI Full-body Edition", frame)
-        if opencv.waitKey(1) == ord('q'):
+
+        # Program stops when "ESC" key is pressed
+        if opencv.waitKey(3) & keyboard.is_pressed("ESC"):
+            print(' ')
+            print("(!) Exited through ESC key.")
             break
 
     from_capture.release()
