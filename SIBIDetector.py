@@ -1,5 +1,3 @@
-import time
-
 import keyboard
 import cv2 as opencv
 import mediapipe
