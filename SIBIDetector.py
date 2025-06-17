@@ -71,7 +71,8 @@ def main():
             mediapipe_holistic.HAND_CONNECTIONS,
             landmark_drawing_spec = mediapipe_drawing_styles.get_default_hand_landmarks_style(),
         )
-
+        # Mediapipe detection end --------------------------------------------------------------------------------------
+        
         opencv.imshow("SIBI Full-body Edition", frame)
 
         # Program stops when "ESC" key is pressed
