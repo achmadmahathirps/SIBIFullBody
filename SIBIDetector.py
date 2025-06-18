@@ -1,3 +1,4 @@
+import math
 import time
 from collections import deque
 import keyboard
@@ -6,6 +7,7 @@ import mediapipe
 
 # Global variables
 fps_buffer = deque(maxlen=10)
+
 
 def update_fps(previous_time):
     current_time = time.time()
@@ -16,6 +18,10 @@ def update_fps(previous_time):
     smoothed_fps = sum(fps_buffer) / len(fps_buffer)
 
     return smoothed_fps, current_time
+
+
+def euclidean_distance(point1, point2):
+    return math.hypot(point1.x - point2.y, point1.y - point2.y)
 
 
 def draw_fps(frame, fps, position=(10, 30), scale=1, thickness=2):
