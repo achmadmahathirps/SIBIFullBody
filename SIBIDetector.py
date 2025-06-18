@@ -101,29 +101,34 @@ def main():
             frame.flags.writeable = True
             frame = opencv.cvtColor(frame, opencv.COLOR_RGB2BGR)
 
-            # Draw pose landmarks
-            mediapipe_drawing.draw_landmarks(
-                frame,
-                detection_results.pose_landmarks,
-                mediapipe_holistic.POSE_CONNECTIONS,
-                landmark_drawing_spec = mediapipe_drawing_styles.get_default_pose_landmarks_style(),
-            )
+            if detection_results.pose_landmarks is not None:
+                # 
 
-            # Draw right hand landmarks
-            mediapipe_drawing.draw_landmarks(
-                frame,
-                detection_results.right_hand_landmarks,
-                mediapipe_holistic.HAND_CONNECTIONS,
-                landmark_drawing_spec = mediapipe_drawing_styles.get_default_hand_landmarks_style(),
-            )
+                # Draw pose landmarks
+                mediapipe_drawing.draw_landmarks(
+                    frame,
+                    detection_results.pose_landmarks,
+                    mediapipe_holistic.POSE_CONNECTIONS,
+                    landmark_drawing_spec = mediapipe_drawing_styles.get_default_pose_landmarks_style(),
+                )
 
-            # Draw left hand landmarks
-            mediapipe_drawing.draw_landmarks(
-                frame,
-                detection_results.left_hand_landmarks,
-                mediapipe_holistic.HAND_CONNECTIONS,
-                landmark_drawing_spec = mediapipe_drawing_styles.get_default_hand_landmarks_style(),
-            )
+                # Draw right hand landmarks
+                mediapipe_drawing.draw_landmarks(
+                    frame,
+                    detection_results.right_hand_landmarks,
+                    mediapipe_holistic.HAND_CONNECTIONS,
+                    landmark_drawing_spec = mediapipe_drawing_styles.get_default_hand_landmarks_style(),
+                )
+
+                # Draw left hand landmarks
+                mediapipe_drawing.draw_landmarks(
+                    frame,
+                    detection_results.left_hand_landmarks,
+                    mediapipe_holistic.HAND_CONNECTIONS,
+                    landmark_drawing_spec = mediapipe_drawing_styles.get_default_hand_landmarks_style(),
+                )
+            else:
+                pass
 
             # Update & draw FPS
             fps, previous_time = update_fps(previous_time)
