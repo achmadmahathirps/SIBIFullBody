@@ -24,6 +24,10 @@ def euclidean_distance(point1, point2):
     return math.hypot(point1.x - point2.y, point1.y - point2.y)
 
 
+def normalize_landmarks(landmarks, center, scale):
+    return [((lm.x - center[0]) / scale, (lm.y - center[1]) / scale) for lm in landmarks]
+
+
 def draw_fps(frame, fps, position=(10, 30), scale=1, thickness=2):
     if fps < 10:
         color = (0, 0, 255) # RED (BGR)
