@@ -51,7 +51,7 @@ def draw_fps(frame, fps, position=(10, 30), scale=1, thickness=2):
 def main():
 
     # Initialize webcam settings
-    webcam = int(1)
+    webcam = int(2)
     from_capture = opencv.VideoCapture(webcam, opencv.CAP_DSHOW)
     from_capture.set(opencv.CAP_PROP_FRAME_WIDTH, 640)
     from_capture.set(opencv.CAP_PROP_FRAME_HEIGHT, 480)
